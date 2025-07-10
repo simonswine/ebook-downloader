@@ -207,7 +207,7 @@ func (d *DerSpiegel) DownloadLatest(f io.Writer) error {
 		return fmt.Errorf("no issues found")
 	}
 
-	i := list[0]
+	i := list[len(list)-1]
 	slog.Info("Latest issue found", "title", i.title, "year", i.year, "issue", i.issue)
 
 	err = d.downloadPDF(&i)
