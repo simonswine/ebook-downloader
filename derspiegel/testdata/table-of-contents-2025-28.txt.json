@@ -1,257 +1,262 @@
-[
-  {
-    "page": 8,
-    "level": 0,
-    "title": "TITEL"
-  },
-  {
-    "page": 8,
-    "level": 1,
-    "title": "Aufrüstung Bunker bauen, Vorräte anlegen, schießen lernen: Viele Deutsche machen sich bereit für den Ernstfall"
-  },
-  {
-    "page": 15,
-    "level": 1,
-    "title": "Verteidigung Regierung und Geheimdienste warnen vor russischen Angriffen"
-  },
-  {
-    "page": 16,
-    "level": 1,
-    "title": "Geopolitik Wie realistisch ist eine europäische Atombombe?"
-  },
-  {
-    "page": 20,
-    "level": 1,
-    "title": "Psychologie Angstforscher Jürgen Margraf im SPIEGEL-Gespräch über den Umgang mit schlechten Nachrichten"
-  },
-  {
-    "page": 6,
-    "level": 0,
-    "title": "DEUTSCHLAND"
-  },
-  {
-    "page": 6,
-    "level": 1,
-    "title": "Leitartikel Der Westen kann Erdoğan nichts entgegensetzen"
-  },
-  {
-    "page": 24,
-    "level": 1,
-    "title": "Berliner SPD nimmt neuen Anlauf für Mietendeckel / Mögliche EU-Norderweiterung / Abgelehnter Asylbewerber aus Transitbereich geflohen / Neue Klimagruppe Guter Grund / Der gesunde Menschenverstand"
-  },
-  {
-    "page": 28,
-    "level": 1,
-    "title": "Haushalt Finanzminister Lars Klingbeil bürdet den Jungen viel auf"
-  },
-  {
-    "page": 31,
-    "level": 1,
-    "title": "Wettkampf Altbundeskanzlerin Angela Merkel im Fernduell mit Friedrich Merz"
-  },
-  {
-    "page": 32,
-    "level": 1,
-    "title": "Karrieren Ex-Vizekanzler Robert Habeck sucht nach einer neuen Rolle"
-  },
-  {
-    "page": 34,
-    "level": 1,
-    "title": "Staatsschutz Die Reichsbürger-Prozesse um Prinz Reuß bringen die Justiz an ihre Grenzen"
-  },
-  {
-    "page": 44,
-    "level": 1,
-    "title": "Tierschutz Der Leidensweg einer Kuh beim Transport quer durch Europa"
-  },
-  {
-    "page": 46,
-    "level": 1,
-    "title": "Strafjustiz Kurz vor Prozessbeginn werden neue Hintergründe zum Fall Christina Block bekannt"
-  },
-  {
-    "page": 50,
-    "level": 0,
-    "title": "DEBATTE"
-  },
-  {
-    "page": 50,
-    "level": 1,
-    "title": "Hass Der Soziologe Wilhelm Heitmeyer über die gefährliche Ignoranz gegenüber der gesellschaftlichen Verrohung"
-  },
-  {
-    "page": 52,
-    "level": 0,
-    "title": "REPORTER"
-  },
-  {
-    "page": 52,
-    "level": 1,
-    "title": "Familienalbum / Sie wollen Trump versteinern?"
-  },
-  {
-    "page": 53,
-    "level": 1,
-    "title": "Eine Meldung und ihre Geschichte Warum eine Fußballmannschaft immer verliert – und trotzdem weitermacht"
-  },
-  {
-    "page": 54,
-    "level": 1,
-    "title": "Lärm Am Brüsseler Platz in Köln streiten Anwohner und feiernde Besucher. Die Geschichte einer Eskalation"
-  },
-  {
-    "page": 59,
-    "level": 1,
-    "title": "Homestory Der verlorene Ring"
-  },
-  {
-    "page": 60,
-    "level": 0,
-    "title": "WIRTSCHAFT"
-  },
-  {
-    "page": 60,
-    "level": 1,
-    "title": "Chinas Willkür bremst deutsche Betriebe / Vereinte Nationen sollen Mindeststeuer retten"
-  },
-  {
-    "page": 62,
-    "level": 1,
-    "title": "Konzerne Deutsche-Bank-Chef Christian Sewing muss sich mit einem Skandal aus der Vergangenheit herumschlagen"
-  },
-  {
-    "page": 67,
-    "level": 1,
-    "title": "Energie Die Renditetricks der Stromnetzbetreiber"
-  },
-  {
-    "page": 68,
-    "level": 1,
-    "title": "Genuss Wie die Pizzakette L’Osteria gegen den Trend wächst"
-  },
-  {
-    "page": 71,
-    "level": 1,
-    "title": "Unfälle KI-Systeme sollen Ertrinkende retten"
-  },
-  {
-    "page": 72,
-    "level": 0,
-    "title": "AUSLAND"
-  },
-  {
-    "page": 72,
-    "level": 1,
-    "title": "Putins Partnerschaft mit Nordkorea ist nicht nur militärisch / Rauchverbot an französischen Stränden"
-  },
-  {
-    "page": 74,
-    "level": 1,
-    "title": "Großbritannien Wie Rechtspopulist Nigel Farage Premierminister werden könnte"
-  },
-  {
-    "page": 77,
-    "level": 1,
-    "title": "Brasilien Ein TikTok-Tänzer fordert das Männlichkeitsbild in den Favelas heraus"
-  },
-  {
-    "page": 78,
-    "level": 1,
-    "title": "Syrien Interview mit der einzigen Frau und Christin in der neuen Regierung"
-  },
-  {
-    "page": 80,
-    "level": 1,
-    "title": "USA Der linke Politstar Zohran Mamdani aus New York schockt die Demokraten"
-  },
-  {
-    "page": 82,
-    "level": 1,
-    "title": "Philippinen Junge Filipinos stemmen sich gegen Chinas Gebietsansprüche"
-  },
-  {
-    "page": 85,
-    "level": 0,
-    "title": "SPORT"
-  },
-  {
-    "page": 85,
-    "level": 1,
-    "title": "Durchschnittsgeschwindigkeiten im Männer-Radsport / Hall of Fame: Brad Pitt, Schauspieler"
-  },
-  {
-    "page": 86,
-    "level": 1,
-    "title": "Tennis Stratege gegen Künstler – das neue Traumduell zwischen Jannik Sinner und Carlos Alcaraz"
-  },
-  {
-    "page": 90,
-    "level": 1,
-    "title": "Fußball-EM I Teamkapitänin Giulia Gwinn will anders sein als ihre Amtsvorgängerin"
-  },
-  {
-    "page": 91,
-    "level": 1,
-    "title": "Fußball-EM II Die frühere DFB-Keeperin Katja Kraus zur Entwicklung des Frauenfußballs"
-  },
-  {
-    "page": 92,
-    "level": 0,
-    "title": "WISSEN"
-  },
-  {
-    "page": 92,
-    "level": 1,
-    "title": "Stromverbrauch von KI / Heiße Tage nehmen zu / Was tun gegen Blattläuse?"
-  },
-  {
-    "page": 94,
-    "level": 1,
-    "title": "Energiewende Der Traum von der Autarkie"
-  },
-  {
-    "page": 98,
-    "level": 1,
-    "title": "Gesundheit Migräne trifft auch Männer – aber mit anderen Symptomen"
-  },
-  {
-    "page": 100,
-    "level": 1,
-    "title": "Psychologie Wie Rettungskräfte mit emotionaler Belastung umgehen"
-  },
-  {
-    "page": 104,
-    "level": 0,
-    "title": "KULTUR"
-  },
-  {
-    "page": 104,
-    "level": 1,
-    "title": "Skandal um Maxim Biller / Netflix-Thriller »Brick« / Sachbuch »Abgefahren« / Kinofilm »Der Fleck«"
-  },
-  {
-    "page": 106,
-    "level": 1,
-    "title": "Pop SPIEGEL-Gespräch mit DJ Felix Jaehn über seine non-binäre Identität"
-  },
-  {
-    "page": 110,
-    "level": 1,
-    "title": "Mode Zu Besuch im wilden Garten von Strickdesignerin Iris von Arnim"
-  },
-  {
-    "page": 112,
-    "level": 1,
-    "title": "Streaming Lena Dunhams Serie »Too Much«"
-  },
-  {
-    "page": 114,
-    "level": 1,
-    "title": "Technik Künstlich generierte Musik erobert Spotify"
-  },
-  {
-    "page": 115,
-    "level": 1,
-    "title": "Serienkritik »The Narrow Road to the Deep North«"
-  }
-]
+{
+  "issue": 28,
+  "year": 2025,
+  "publishing_date": "2025-07-04T00:00:00Z",
+  "bookmarks": [
+    {
+      "page": 8,
+      "level": 0,
+      "title": "TITEL"
+    },
+    {
+      "page": 8,
+      "level": 1,
+      "title": "Aufrüstung Bunker bauen, Vorräte anlegen, schießen lernen: Viele Deutsche machen sich bereit für den Ernstfall"
+    },
+    {
+      "page": 15,
+      "level": 1,
+      "title": "Verteidigung Regierung und Geheimdienste warnen vor russischen Angriffen"
+    },
+    {
+      "page": 16,
+      "level": 1,
+      "title": "Geopolitik Wie realistisch ist eine europäische Atombombe?"
+    },
+    {
+      "page": 20,
+      "level": 1,
+      "title": "Psychologie Angstforscher Jürgen Margraf im SPIEGEL-Gespräch über den Umgang mit schlechten Nachrichten"
+    },
+    {
+      "page": 6,
+      "level": 0,
+      "title": "DEUTSCHLAND"
+    },
+    {
+      "page": 6,
+      "level": 1,
+      "title": "Leitartikel Der Westen kann Erdoğan nichts entgegensetzen"
+    },
+    {
+      "page": 24,
+      "level": 1,
+      "title": "Berliner SPD nimmt neuen Anlauf für Mietendeckel / Mögliche EU-Norderweiterung / Abgelehnter Asylbewerber aus Transitbereich geflohen / Neue Klimagruppe Guter Grund / Der gesunde Menschenverstand"
+    },
+    {
+      "page": 28,
+      "level": 1,
+      "title": "Haushalt Finanzminister Lars Klingbeil bürdet den Jungen viel auf"
+    },
+    {
+      "page": 31,
+      "level": 1,
+      "title": "Wettkampf Altbundeskanzlerin Angela Merkel im Fernduell mit Friedrich Merz"
+    },
+    {
+      "page": 32,
+      "level": 1,
+      "title": "Karrieren Ex-Vizekanzler Robert Habeck sucht nach einer neuen Rolle"
+    },
+    {
+      "page": 34,
+      "level": 1,
+      "title": "Staatsschutz Die Reichsbürger-Prozesse um Prinz Reuß bringen die Justiz an ihre Grenzen"
+    },
+    {
+      "page": 44,
+      "level": 1,
+      "title": "Tierschutz Der Leidensweg einer Kuh beim Transport quer durch Europa"
+    },
+    {
+      "page": 46,
+      "level": 1,
+      "title": "Strafjustiz Kurz vor Prozessbeginn werden neue Hintergründe zum Fall Christina Block bekannt"
+    },
+    {
+      "page": 50,
+      "level": 0,
+      "title": "DEBATTE"
+    },
+    {
+      "page": 50,
+      "level": 1,
+      "title": "Hass Der Soziologe Wilhelm Heitmeyer über die gefährliche Ignoranz gegenüber der gesellschaftlichen Verrohung"
+    },
+    {
+      "page": 52,
+      "level": 0,
+      "title": "REPORTER"
+    },
+    {
+      "page": 52,
+      "level": 1,
+      "title": "Familienalbum / Sie wollen Trump versteinern?"
+    },
+    {
+      "page": 53,
+      "level": 1,
+      "title": "Eine Meldung und ihre Geschichte Warum eine Fußballmannschaft immer verliert – und trotzdem weitermacht"
+    },
+    {
+      "page": 54,
+      "level": 1,
+      "title": "Lärm Am Brüsseler Platz in Köln streiten Anwohner und feiernde Besucher. Die Geschichte einer Eskalation"
+    },
+    {
+      "page": 59,
+      "level": 1,
+      "title": "Homestory Der verlorene Ring"
+    },
+    {
+      "page": 60,
+      "level": 0,
+      "title": "WIRTSCHAFT"
+    },
+    {
+      "page": 60,
+      "level": 1,
+      "title": "Chinas Willkür bremst deutsche Betriebe / Vereinte Nationen sollen Mindeststeuer retten"
+    },
+    {
+      "page": 62,
+      "level": 1,
+      "title": "Konzerne Deutsche-Bank-Chef Christian Sewing muss sich mit einem Skandal aus der Vergangenheit herumschlagen"
+    },
+    {
+      "page": 67,
+      "level": 1,
+      "title": "Energie Die Renditetricks der Stromnetzbetreiber"
+    },
+    {
+      "page": 68,
+      "level": 1,
+      "title": "Genuss Wie die Pizzakette L’Osteria gegen den Trend wächst"
+    },
+    {
+      "page": 71,
+      "level": 1,
+      "title": "Unfälle KI-Systeme sollen Ertrinkende retten"
+    },
+    {
+      "page": 72,
+      "level": 0,
+      "title": "AUSLAND"
+    },
+    {
+      "page": 72,
+      "level": 1,
+      "title": "Putins Partnerschaft mit Nordkorea ist nicht nur militärisch / Rauchverbot an französischen Stränden"
+    },
+    {
+      "page": 74,
+      "level": 1,
+      "title": "Großbritannien Wie Rechtspopulist Nigel Farage Premierminister werden könnte"
+    },
+    {
+      "page": 77,
+      "level": 1,
+      "title": "Brasilien Ein TikTok-Tänzer fordert das Männlichkeitsbild in den Favelas heraus"
+    },
+    {
+      "page": 78,
+      "level": 1,
+      "title": "Syrien Interview mit der einzigen Frau und Christin in der neuen Regierung"
+    },
+    {
+      "page": 80,
+      "level": 1,
+      "title": "USA Der linke Politstar Zohran Mamdani aus New York schockt die Demokraten"
+    },
+    {
+      "page": 82,
+      "level": 1,
+      "title": "Philippinen Junge Filipinos stemmen sich gegen Chinas Gebietsansprüche"
+    },
+    {
+      "page": 85,
+      "level": 0,
+      "title": "SPORT"
+    },
+    {
+      "page": 85,
+      "level": 1,
+      "title": "Durchschnittsgeschwindigkeiten im Männer-Radsport / Hall of Fame: Brad Pitt, Schauspieler"
+    },
+    {
+      "page": 86,
+      "level": 1,
+      "title": "Tennis Stratege gegen Künstler – das neue Traumduell zwischen Jannik Sinner und Carlos Alcaraz"
+    },
+    {
+      "page": 90,
+      "level": 1,
+      "title": "Fußball-EM I Teamkapitänin Giulia Gwinn will anders sein als ihre Amtsvorgängerin"
+    },
+    {
+      "page": 91,
+      "level": 1,
+      "title": "Fußball-EM II Die frühere DFB-Keeperin Katja Kraus zur Entwicklung des Frauenfußballs"
+    },
+    {
+      "page": 92,
+      "level": 0,
+      "title": "WISSEN"
+    },
+    {
+      "page": 92,
+      "level": 1,
+      "title": "Stromverbrauch von KI / Heiße Tage nehmen zu / Was tun gegen Blattläuse?"
+    },
+    {
+      "page": 94,
+      "level": 1,
+      "title": "Energiewende Der Traum von der Autarkie"
+    },
+    {
+      "page": 98,
+      "level": 1,
+      "title": "Gesundheit Migräne trifft auch Männer – aber mit anderen Symptomen"
+    },
+    {
+      "page": 100,
+      "level": 1,
+      "title": "Psychologie Wie Rettungskräfte mit emotionaler Belastung umgehen"
+    },
+    {
+      "page": 104,
+      "level": 0,
+      "title": "KULTUR"
+    },
+    {
+      "page": 104,
+      "level": 1,
+      "title": "Skandal um Maxim Biller / Netflix-Thriller »Brick« / Sachbuch »Abgefahren« / Kinofilm »Der Fleck«"
+    },
+    {
+      "page": 106,
+      "level": 1,
+      "title": "Pop SPIEGEL-Gespräch mit DJ Felix Jaehn über seine non-binäre Identität"
+    },
+    {
+      "page": 110,
+      "level": 1,
+      "title": "Mode Zu Besuch im wilden Garten von Strickdesignerin Iris von Arnim"
+    },
+    {
+      "page": 112,
+      "level": 1,
+      "title": "Streaming Lena Dunhams Serie »Too Much«"
+    },
+    {
+      "page": 114,
+      "level": 1,
+      "title": "Technik Künstlich generierte Musik erobert Spotify"
+    },
+    {
+      "page": 115,
+      "level": 1,
+      "title": "Serienkritik »The Narrow Road to the Deep North«"
+    }
+  ]
+}

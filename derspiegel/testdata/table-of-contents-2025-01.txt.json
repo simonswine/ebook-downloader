@@ -1,222 +1,227 @@
-[
-  {
-    "page": 8,
-    "level": 0,
-    "title": "TITEL"
-  },
-  {
-    "page": 8,
-    "level": 1,
-    "title": "Essay Die erstaunliche Kraft der Zuversicht für unser Leben"
-  },
-  {
-    "page": 12,
-    "level": 1,
-    "title": "Kämpfer Zehn Menschen, die sich durch Zivilcourage auszeichnen"
-  },
-  {
-    "page": 16,
-    "level": 1,
-    "title": "Pioniere Sie durchbrechen Grenzen, entdecken Unbekanntes: zehn Visionäre, die neue Wege gehen"
-  },
-  {
-    "page": 20,
-    "level": 1,
-    "title": "Entscheider Zehn Frauen und Männer in Führungspositionen, die den Wandel vorantreiben und Verantwortung übernehmen"
-  },
-  {
-    "page": 23,
-    "level": 1,
-    "title": "Retter Zehn Geschichten von Menschen, die den Planeten schützen wollen"
-  },
-  {
-    "page": 26,
-    "level": 1,
-    "title": "Helfer Ohne sie wäre unsere Welt ärmer und kälter: zehn Hoffnungsträger, die ihre Mitmenschen stärken"
-  },
-  {
-    "page": 30,
-    "level": 1,
-    "title": "Denker Zehn Köpfe, die mit Gedankenreichtum und Geistesschärfe Zuversicht verbreiten"
-  },
-  {
-    "page": 56,
-    "level": 1,
-    "title": "Unternehmer Zehn Macherinnen und Macher, die die Zukunft mit ihren Ideen gestalten"
-  },
-  {
-    "page": 86,
-    "level": 1,
-    "title": "Athleten Zehn Sportlerinnen und Sportler, die Grenzen überwinden"
-  },
-  {
-    "page": 96,
-    "level": 1,
-    "title": "Entdeckerinnen Zehn Forscherinnen und junge Talente, die Neuland erschließen"
-  },
-  {
-    "page": 108,
-    "level": 1,
-    "title": "Künstler Zehn Sängerinnen, Entertainer und Kulturschaffende, die Mut machen"
-  },
-  {
-    "page": 6,
-    "level": 0,
-    "title": "DEUTSCHLAND"
-  },
-  {
-    "page": 6,
-    "level": 1,
-    "title": "Leitartikel Deutschland braucht eine Wende zum Wachstum"
-  },
-  {
-    "page": 36,
-    "level": 1,
-    "title": "Gewalt Der Täter von Magdeburg fiel den Behörden jahrelang mit Drohungen auf"
-  },
-  {
-    "page": 39,
-    "level": 1,
-    "title": "Ein Opfer des Angriffs auf den Weihnachtsmarkt berichtet"
-  },
-  {
-    "page": 42,
-    "level": 1,
-    "title": "Wahlkampf Die Union sucht nach dem richtigen Umgang mit dem Anschlag"
-  },
-  {
-    "page": 44,
-    "level": 0,
-    "title": "DER SPIEGEL"
-  },
-  {
-    "page": 44,
-    "level": 1,
-    "title": "Parlamentarier Auffallend viele Abgeordnete mittleren Alters kehren der Politik den Rücken. Drei von ihnen erzählen, warum"
-  },
-  {
-    "page": 48,
-    "level": 1,
-    "title": "Bildung Kleinere Klassen bringen wenig. Was der neuseeländische Erziehungsexperte John Hattie von Deutschlands Schulen hält"
-  },
-  {
-    "page": 51,
-    "level": 1,
-    "title": "Justiz Fliehen syrische Folterer jetzt nach Deutschland?"
-  },
-  {
-    "page": 52,
-    "level": 1,
-    "title": "Cyberkriminalität Die dramatische Geschichte eines Paares, dessen Sexbilder im Internet landeten"
-  },
-  {
-    "page": 60,
-    "level": 0,
-    "title": "WIRTSCHAFT"
-  },
-  {
-    "page": 60,
-    "level": 1,
-    "title": "Elektromobilität Eine Datenlücke im Volkswagen-Konzern betraf Hunderttausende Autofahrer"
-  },
-  {
-    "page": 64,
-    "level": 1,
-    "title": "Zukunft Mit deutschen Raketen in den Weltraum? Zu Besuch bei einem Start-up in Bayern"
-  },
-  {
-    "page": 67,
-    "level": 1,
-    "title": "Geldanlage Aktien und Bitcoin: Was 2024 aus 10.000 Euro wurde"
-  },
-  {
-    "page": 68,
-    "level": 1,
-    "title": "Luxus Die exzentrischen Armbanduhren der Schweizer Firma MB\u0026F"
-  },
-  {
-    "page": 70,
-    "level": 1,
-    "title": "Genussmittel Ein britischer Arzt braut Alkoholersatz für den Rausch ohne Reue"
-  },
-  {
-    "page": 72,
-    "level": 0,
-    "title": "AUSLAND"
-  },
-  {
-    "page": 72,
-    "level": 1,
-    "title": "Die Suche nach einem friedlicheren Leben"
-  },
-  {
-    "page": 74,
-    "level": 1,
-    "title": "Kolumbien Ausgerechnet ein Drogenkartell will die gefährliche Migrationsroute durch den Darién Gap sicherer machen. Unterwegs im unwegsamen Grenzgebiet zu Panama"
-  },
-  {
-    "page": 80,
-    "level": 1,
-    "title": "Russland Wie Männer im wehrpflichtigen Alter von der Straße wegverhaftet werden"
-  },
-  {
-    "page": 82,
-    "level": 1,
-    "title": "Nordkorea Machthaber Kim Jong Un war lange international isoliert – das hat sich nun geändert"
-  },
-  {
-    "page": 90,
-    "level": 0,
-    "title": "SPORT"
-  },
-  {
-    "page": 90,
-    "level": 1,
-    "title": "Sportfotografie Muhammad Ali, Steffi Graf, Michael Jordan und all die anderen: SPIEGEL-Gespräch mit Walter Iooss Jr. über die ikonischen Bilder seiner langen Karriere"
-  },
-  {
-    "page": 100,
-    "level": 0,
-    "title": "WISSEN"
-  },
-  {
-    "page": 100,
-    "level": 1,
-    "title": "Lebenssinn SPIEGEL-Gespräch mit der Psychologin Tatjana Schnell über die Suche nach einem erfüllten Dasein"
-  },
-  {
-    "page": 104,
-    "level": 1,
-    "title": "Küstenschutz Mit Elektrizität wollen Forscher bröckelnde Küsten stabilisieren"
-  },
-  {
-    "page": 107,
-    "level": 1,
-    "title": "Haustiere Wie sinnvoll sind GPS-Tracker und andere Tiergadgets?"
-  },
-  {
-    "page": 112,
-    "level": 0,
-    "title": "KULTUR"
-  },
-  {
-    "page": 112,
-    "level": 1,
-    "title": "Ostdeutschland Chemnitz will sich als Europäische Kulturhauptstadt 2025 neu erfinden. Wenn da bloß die Rechtsextremen nicht wären"
-  },
-  {
-    "page": 116,
-    "level": 1,
-    "title": "Essay Der Schriftsteller Tijan Sila über die Auswirkungen einer gewalttätigen Kultur"
-  },
-  {
-    "page": 120,
-    "level": 1,
-    "title": "Schauspieler Der einstige Hollywoodstar James Franco ist zurück – als Künstler in Zürich"
-  },
-  {
-    "page": 123,
-    "level": 1,
-    "title": "Serienkritik Die zweite Staffel des verstörenden koreanischen Blockbusters »Squid Game«"
-  }
-]
+{
+  "issue": 1,
+  "year": 2025,
+  "publishing_date": "2024-12-28T00:00:00Z",
+  "bookmarks": [
+    {
+      "page": 8,
+      "level": 0,
+      "title": "TITEL"
+    },
+    {
+      "page": 8,
+      "level": 1,
+      "title": "Essay Die erstaunliche Kraft der Zuversicht für unser Leben"
+    },
+    {
+      "page": 12,
+      "level": 1,
+      "title": "Kämpfer Zehn Menschen, die sich durch Zivilcourage auszeichnen"
+    },
+    {
+      "page": 16,
+      "level": 1,
+      "title": "Pioniere Sie durchbrechen Grenzen, entdecken Unbekanntes: zehn Visionäre, die neue Wege gehen"
+    },
+    {
+      "page": 20,
+      "level": 1,
+      "title": "Entscheider Zehn Frauen und Männer in Führungspositionen, die den Wandel vorantreiben und Verantwortung übernehmen"
+    },
+    {
+      "page": 23,
+      "level": 1,
+      "title": "Retter Zehn Geschichten von Menschen, die den Planeten schützen wollen"
+    },
+    {
+      "page": 26,
+      "level": 1,
+      "title": "Helfer Ohne sie wäre unsere Welt ärmer und kälter: zehn Hoffnungsträger, die ihre Mitmenschen stärken"
+    },
+    {
+      "page": 30,
+      "level": 1,
+      "title": "Denker Zehn Köpfe, die mit Gedankenreichtum und Geistesschärfe Zuversicht verbreiten"
+    },
+    {
+      "page": 56,
+      "level": 1,
+      "title": "Unternehmer Zehn Macherinnen und Macher, die die Zukunft mit ihren Ideen gestalten"
+    },
+    {
+      "page": 86,
+      "level": 1,
+      "title": "Athleten Zehn Sportlerinnen und Sportler, die Grenzen überwinden"
+    },
+    {
+      "page": 96,
+      "level": 1,
+      "title": "Entdeckerinnen Zehn Forscherinnen und junge Talente, die Neuland erschließen"
+    },
+    {
+      "page": 108,
+      "level": 1,
+      "title": "Künstler Zehn Sängerinnen, Entertainer und Kulturschaffende, die Mut machen"
+    },
+    {
+      "page": 6,
+      "level": 0,
+      "title": "DEUTSCHLAND"
+    },
+    {
+      "page": 6,
+      "level": 1,
+      "title": "Leitartikel Deutschland braucht eine Wende zum Wachstum"
+    },
+    {
+      "page": 36,
+      "level": 1,
+      "title": "Gewalt Der Täter von Magdeburg fiel den Behörden jahrelang mit Drohungen auf"
+    },
+    {
+      "page": 39,
+      "level": 1,
+      "title": "Ein Opfer des Angriffs auf den Weihnachtsmarkt berichtet"
+    },
+    {
+      "page": 42,
+      "level": 1,
+      "title": "Wahlkampf Die Union sucht nach dem richtigen Umgang mit dem Anschlag"
+    },
+    {
+      "page": 44,
+      "level": 0,
+      "title": "DER SPIEGEL"
+    },
+    {
+      "page": 44,
+      "level": 1,
+      "title": "Parlamentarier Auffallend viele Abgeordnete mittleren Alters kehren der Politik den Rücken. Drei von ihnen erzählen, warum"
+    },
+    {
+      "page": 48,
+      "level": 1,
+      "title": "Bildung Kleinere Klassen bringen wenig. Was der neuseeländische Erziehungsexperte John Hattie von Deutschlands Schulen hält"
+    },
+    {
+      "page": 51,
+      "level": 1,
+      "title": "Justiz Fliehen syrische Folterer jetzt nach Deutschland?"
+    },
+    {
+      "page": 52,
+      "level": 1,
+      "title": "Cyberkriminalität Die dramatische Geschichte eines Paares, dessen Sexbilder im Internet landeten"
+    },
+    {
+      "page": 60,
+      "level": 0,
+      "title": "WIRTSCHAFT"
+    },
+    {
+      "page": 60,
+      "level": 1,
+      "title": "Elektromobilität Eine Datenlücke im Volkswagen-Konzern betraf Hunderttausende Autofahrer"
+    },
+    {
+      "page": 64,
+      "level": 1,
+      "title": "Zukunft Mit deutschen Raketen in den Weltraum? Zu Besuch bei einem Start-up in Bayern"
+    },
+    {
+      "page": 67,
+      "level": 1,
+      "title": "Geldanlage Aktien und Bitcoin: Was 2024 aus 10.000 Euro wurde"
+    },
+    {
+      "page": 68,
+      "level": 1,
+      "title": "Luxus Die exzentrischen Armbanduhren der Schweizer Firma MB\u0026F"
+    },
+    {
+      "page": 70,
+      "level": 1,
+      "title": "Genussmittel Ein britischer Arzt braut Alkoholersatz für den Rausch ohne Reue"
+    },
+    {
+      "page": 72,
+      "level": 0,
+      "title": "AUSLAND"
+    },
+    {
+      "page": 72,
+      "level": 1,
+      "title": "Die Suche nach einem friedlicheren Leben"
+    },
+    {
+      "page": 74,
+      "level": 1,
+      "title": "Kolumbien Ausgerechnet ein Drogenkartell will die gefährliche Migrationsroute durch den Darién Gap sicherer machen. Unterwegs im unwegsamen Grenzgebiet zu Panama"
+    },
+    {
+      "page": 80,
+      "level": 1,
+      "title": "Russland Wie Männer im wehrpflichtigen Alter von der Straße wegverhaftet werden"
+    },
+    {
+      "page": 82,
+      "level": 1,
+      "title": "Nordkorea Machthaber Kim Jong Un war lange international isoliert – das hat sich nun geändert"
+    },
+    {
+      "page": 90,
+      "level": 0,
+      "title": "SPORT"
+    },
+    {
+      "page": 90,
+      "level": 1,
+      "title": "Sportfotografie Muhammad Ali, Steffi Graf, Michael Jordan und all die anderen: SPIEGEL-Gespräch mit Walter Iooss Jr. über die ikonischen Bilder seiner langen Karriere"
+    },
+    {
+      "page": 100,
+      "level": 0,
+      "title": "WISSEN"
+    },
+    {
+      "page": 100,
+      "level": 1,
+      "title": "Lebenssinn SPIEGEL-Gespräch mit der Psychologin Tatjana Schnell über die Suche nach einem erfüllten Dasein"
+    },
+    {
+      "page": 104,
+      "level": 1,
+      "title": "Küstenschutz Mit Elektrizität wollen Forscher bröckelnde Küsten stabilisieren"
+    },
+    {
+      "page": 107,
+      "level": 1,
+      "title": "Haustiere Wie sinnvoll sind GPS-Tracker und andere Tiergadgets?"
+    },
+    {
+      "page": 112,
+      "level": 0,
+      "title": "KULTUR"
+    },
+    {
+      "page": 112,
+      "level": 1,
+      "title": "Ostdeutschland Chemnitz will sich als Europäische Kulturhauptstadt 2025 neu erfinden. Wenn da bloß die Rechtsextremen nicht wären"
+    },
+    {
+      "page": 116,
+      "level": 1,
+      "title": "Essay Der Schriftsteller Tijan Sila über die Auswirkungen einer gewalttätigen Kultur"
+    },
+    {
+      "page": 120,
+      "level": 1,
+      "title": "Schauspieler Der einstige Hollywoodstar James Franco ist zurück – als Künstler in Zürich"
+    },
+    {
+      "page": 123,
+      "level": 1,
+      "title": "Serienkritik Die zweite Staffel des verstörenden koreanischen Blockbusters »Squid Game«"
+    }
+  ]
+}

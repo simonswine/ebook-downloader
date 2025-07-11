@@ -7,18 +7,27 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
 var (
 	regexRessort  = regexp.MustCompile(`^[A-Z ]+$`)
 	regexBookmark = regexp.MustCompile(`^\s*\d+\s+\|\s+`)
+	regexIssue    = regexp.MustCompile(`^DER SPIEGEL (\d+)\. Jahrgang \| Heft (\d+) \| (\d+\.\d+.\d+)`)
 )
 
 type Bookmark struct {
 	PageNumber int    `json:"page"`
 	Level      int    `json:"level"`
 	Title      string `json:"title"`
+}
+
+type TOC struct {
+	Issue          int        `json:"issue"`
+	Year           int        `json:"year"`
+	PublishingDate time.Time  `json:"publishing_date"`
+	Bookmarks      []Bookmark `json:"bookmarks"`
 }
 
 type titleParts []string
@@ -59,8 +68,8 @@ type parseBookmark struct {
 	titleParts titleParts
 }
 
-func parseTOC(r io.Reader) ([]Bookmark, error) {
-	var result []Bookmark
+func parseTOC(r io.Reader) (*TOC, error) {
+	var result TOC
 	// go through result line by line
 	scanner := bufio.NewScanner(r)
 	var (
@@ -73,20 +82,47 @@ func parseTOC(r io.Reader) ([]Bookmark, error) {
 
 			// If we have a ressort, we need to add it to the list.
 			if lastRessort != "" {
-				result = append(result, Bookmark{
+				result.Bookmarks = append(result.Bookmarks, Bookmark{
 					PageNumber: newBookmark.PageNumber,
 					Level:      0,
 					Title:      lastRessort,
 				})
 			}
 			newBookmark.Title = newBookmark.titleParts.String()
-			result = append(result, newBookmark.Bookmark)
+			result.Bookmarks = append(result.Bookmarks, newBookmark.Bookmark)
 			lastRessort = ""
 			newBookmark = nil
 		}
 	)
 	for scanner.Scan() {
 		text := scanner.Text()
+
+		if strings.HasPrefix(text, "DER SPIEGEL") {
+			if m := regexIssue.FindStringSubmatch(text); len(m) == 4 {
+				year, err := strconv.Atoi(m[1])
+				if err != nil {
+					slog.Warn("Error parsing year", "text", m[1], "error", err)
+				} else {
+					result.Year = year + 1946
+				}
+
+				issue, err := strconv.Atoi(m[2])
+				if err != nil {
+					slog.Warn("Error parsing issue", "text", m[2], "error", err)
+				} else {
+					result.Issue = issue
+				}
+
+				publishingDate, err := time.Parse("2.1.2006", m[3])
+				if err != nil {
+					slog.Warn("Error parsing publishing date", "text", m[3], "error", err)
+				} else {
+					result.PublishingDate = publishingDate
+				}
+
+				continue
+			}
+		}
 
 		if regexRessort.MatchString(text) {
 			finish()
@@ -135,5 +171,5 @@ func parseTOC(r io.Reader) ([]Bookmark, error) {
 	}
 	finish()
 
-	return result, nil
+	return &result, nil
 }
