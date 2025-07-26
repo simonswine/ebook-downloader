@@ -1,10 +1,14 @@
 package main
 
 import (
+	"context"
 	"log/slog"
 	"os"
+	"os/signal"
+	"syscall"
 
-	"github.com/simonswine/ebook-downloader/derspiegel"
+	"github.com/simonswine/ebook-downloader/calibredb"
+	"github.com/urfave/cli/v3"
 )
 
 func init() {
@@ -16,27 +20,6 @@ func init() {
 	slog.SetDefault(logger)
 }
 
-var ()
-
-func downloadSpiegel() error {
-	b := derspiegel.New(
-		os.Getenv("DER_SPIEGEL_USERNAME"),
-		os.Getenv("DER_SPIEGEL_PASSWORD"),
-	)
-
-	f, err := os.Create("spiegel_latest.pdf")
-	if err != nil {
-		return err
-	}
-
-	err = b.DownloadLatest(f)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func checkError(err error, msg string, args ...any) {
 	if err == nil {
 		return
@@ -46,6 +29,37 @@ func checkError(err error, msg string, args ...any) {
 	os.Exit(1)
 }
 
+func newDB(cmd *cli.Command) *calibredb.CalibreDB {
+	return calibredb.New(cmd.String("calibredb-path"))
+}
+
+func run(ctx context.Context, args []string) error {
+	cmd := &cli.Command{
+		Name: "ebook-downloader",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:  "verbose",
+				Usage: "show debug logs",
+			},
+			&cli.StringFlag{
+				Name:  "calibredb-path",
+				Usage: "path to calibre database",
+				Value: "/var/lib/media/Books/",
+			},
+		},
+		EnableShellCompletion: true,
+		Commands: []*cli.Command{
+			donaukurierCmd,
+			derSpiegelCmd,
+		},
+	}
+
+	return cmd.Run(ctx, args)
+}
+
 func main() {
-	checkError(downloadSpiegel(), "Failed to download spiegel")
+	ctx := context.Background()
+	ctx, stop := signal.NotifyContext(ctx, syscall.SIGTERM, syscall.SIGINT)
+	defer stop()
+	checkError(run(ctx, os.Args), "fatal error occurred")
 }

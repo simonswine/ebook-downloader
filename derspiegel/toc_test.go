@@ -11,7 +11,7 @@ import (
 )
 
 func Test_parseToc(t *testing.T) {
-	// read the test files from the testdata folder
+	// Read the test files from the "testdata" folder
 	files, err := os.ReadDir("testdata")
 	if err != nil {
 		t.Fatalf("failed to read testdata folder: %v", err)
@@ -25,9 +25,8 @@ func Test_parseToc(t *testing.T) {
 			// read the file
 			f, err := os.Open(filepath.Join("testdata", file.Name()))
 			require.NoError(t, err)
-			defer f.Close()
 
-			// parse the toc
+			// Parse the TOC
 			toc, err := parseTOC(f)
 			require.NoError(t, err)
 

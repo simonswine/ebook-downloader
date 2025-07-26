@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 	"unicode"
+
+	"github.com/simonswine/ebook-downloader/meta"
 )
 
 var (
@@ -17,17 +19,11 @@ var (
 	regexIssue    = regexp.MustCompile(`^DER SPIEGEL (\d+)\. Jahrgang \| Heft (\d+) \| (\d+\.\d+.\d+)`)
 )
 
-type Bookmark struct {
-	PageNumber int    `json:"page"`
-	Level      int    `json:"level"`
-	Title      string `json:"title"`
-}
-
 type TOC struct {
-	Issue          int        `json:"issue"`
-	Year           int        `json:"year"`
-	PublishingDate time.Time  `json:"publishing_date"`
-	Bookmarks      []Bookmark `json:"bookmarks"`
+	Issue          int                 `json:"issue"`
+	Year           int                 `json:"year"`
+	PublishingDate meta.PublishingDate `json:"publishing_date"`
+	Bookmarks      []meta.Bookmark     `json:"bookmarks"`
 }
 
 type titleParts []string
@@ -64,7 +60,7 @@ func (c titleParts) String() string {
 }
 
 type parseBookmark struct {
-	Bookmark
+	meta.Bookmark
 	titleParts titleParts
 }
 
@@ -82,9 +78,9 @@ func parseTOC(r io.Reader) (*TOC, error) {
 
 			// If we have a ressort, we need to add it to the list.
 			if lastRessort != "" {
-				result.Bookmarks = append(result.Bookmarks, Bookmark{
+				result.Bookmarks = append(result.Bookmarks, meta.Bookmark{
 					PageNumber: newBookmark.PageNumber,
-					Level:      0,
+					Level:      1,
 					Title:      lastRessort,
 				})
 			}
@@ -117,14 +113,14 @@ func parseTOC(r io.Reader) (*TOC, error) {
 				if err != nil {
 					slog.Warn("Error parsing publishing date", "text", m[3], "error", err)
 				} else {
-					result.PublishingDate = publishingDate
+					result.PublishingDate = meta.PublishingDate(publishingDate)
 				}
 
 				continue
 			}
 		}
 
-		if regexRessort.MatchString(text) {
+		if regexRessort.MatchString(text) && text != "DER SPIEGEL" && text != "DER" && text != "SPIEGEL" {
 			finish()
 			lastRessort = text
 			continue
@@ -145,9 +141,9 @@ func parseTOC(r io.Reader) (*TOC, error) {
 			}
 
 			newBookmark = &parseBookmark{
-				Bookmark: Bookmark{
+				Bookmark: meta.Bookmark{
 					PageNumber: page,
-					Level:      1,
+					Level:      2,
 				},
 				titleParts: []string{text[idx+2:]},
 			}

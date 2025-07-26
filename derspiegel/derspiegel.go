@@ -1,6 +1,7 @@
 package derspiegel
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log/slog"
@@ -11,6 +12,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/headzoo/surf/browser"
+	"github.com/simonswine/ebook-downloader/meta"
 	"gopkg.in/headzoo/surf.v1"
 )
 
@@ -31,10 +33,10 @@ func New(username, password string) *DerSpiegel {
 	}
 }
 
-type issue struct {
-	title string
-	year  int64
-	issue int64
+type Issue struct {
+	Title string
+	Year  int
+	Issue int
 }
 
 func (b *DerSpiegel) login(brow *browser.Browser) error {
@@ -75,7 +77,7 @@ func (b *DerSpiegel) login(brow *browser.Browser) error {
 	return nil
 }
 
-func (b *DerSpiegel) downloadPDF(i *issue) error {
+func (b *DerSpiegel) Download(i *meta.Info, fPDF *os.File) error {
 	uStart, err := url.Parse(PDF_DOWNLOAD_START_URL)
 	if err != nil {
 		return fmt.Errorf("failed to parse PDF download URL: %w", err)
@@ -86,7 +88,7 @@ func (b *DerSpiegel) downloadPDF(i *issue) error {
 	}
 
 	q := uStart.Query()
-	q.Set("heft", fmt.Sprintf("SP/%d/%d", i.year, i.issue))
+	q.Set("heft", fmt.Sprintf("SP/%d/%d", *i.Year, *i.Issue))
 	uStart.RawQuery = q.Encode()
 	uDownload.RawQuery = q.Encode()
 
@@ -111,18 +113,31 @@ func (b *DerSpiegel) downloadPDF(i *issue) error {
 		return err
 	}
 
-	fpath := fmt.Sprintf("derspiegel-%04d-%02d.pdf", i.year, i.issue)
-	slog.Info("Downloading PDF", "title", brow.Title(), "path", fpath)
-
-	f, err := os.Create(fpath)
+	fPDFTemp, err := os.CreateTemp("", "der-spiegel-*.pdf")
 	if err != nil {
-		return fmt.Errorf("failed to create PDF file: %w", err)
+		return fmt.Errorf("failed to create temp file: %w", err)
 	}
-	defer f.Close()
+	//	defer os.Remove(fPDFTemp.Name())
 
-	_, err = brow.Download(f)
+	_, err = brow.Download(fPDFTemp)
 	if err != nil {
 		return fmt.Errorf("failed to download PDF: %w", err)
+	}
+	if err := fPDFTemp.Close(); err != nil {
+		return fmt.Errorf("error closing temp file: %w", err)
+	}
+	slog.Debug("downloaded pdf", "temp_path", fPDFTemp.Name())
+
+	if err := b.updateBookmarks(i, fPDFTemp.Name(), fPDF); err != nil {
+		return fmt.Errorf("failed to update bookmarks: %w", err)
+	}
+
+	if err := fPDF.Close(); err != nil {
+		return fmt.Errorf("error closing pdf file: %w", err)
+	}
+
+	if err := meta.WriteEbookMeta(fPDF.Name(), i); err != nil {
+		return fmt.Errorf("failed to write ebook meta: %w", err)
 	}
 
 	return nil
@@ -132,7 +147,7 @@ func (d *DerSpiegel) browser() *browser.Browser {
 	return surf.NewBrowser()
 }
 
-func (d *DerSpiegel) listIssues(year int) ([]issue, error) {
+func (d *DerSpiegel) ListIssues(year int) ([]*meta.Info, error) {
 	bow := d.browser()
 	u := MAGAZINES_URL
 	if year > 0 {
@@ -144,7 +159,7 @@ func (d *DerSpiegel) listIssues(year int) ([]issue, error) {
 	}
 
 	// find all issues
-	issues := make([]issue, 0, 52)
+	issues := make([]*meta.Info, 0, 52)
 	bow.Find("div.h-full>a").Each(func(_ int, s *goquery.Selection) {
 		link, exists := s.Attr("href")
 		if !exists {
@@ -185,36 +200,54 @@ func (d *DerSpiegel) listIssues(year int) ([]issue, error) {
 			return
 		}
 		slog.Debug("Found issue", "title", title, "link", link, "year", year, "issue", issueNo)
-		issues = append(issues, issue{
-			title: title,
-			year:  year,
-			issue: issueNo,
+
+		yearInt := int(year)
+		issueInt := int(issueNo)
+		issues = append(issues, &meta.Info{
+			Author:   "SPIEGEL-Verlag, Hamburg",
+			Title:    "DER SPIEGEL",
+			Subtitle: &title,
+			Year:     &yearInt,
+			Issue:    &issueInt,
+			Language: "de",
+			Category: meta.CategoryMagazine,
 		})
 	})
 
 	return issues, err
 }
 
-func (d *DerSpiegel) DownloadLatest(f io.Writer) error {
-	slog.Info("Downloading latest Der Spiegel issue...")
+func (d *DerSpiegel) updateBookmarks(info *meta.Info, path string, w io.Writer) error {
+	bufOut := bytes.NewBuffer(nil)
+	if err := meta.ExtractText(path, 4, 5, bufOut); err != nil {
+		return fmt.Errorf("failed to extract text: %w", err)
+	}
 
-	list, err := d.listIssues(0)
+	// get bookmarks
+	bookmarks, err := parseTOC(bufOut)
 	if err != nil {
-		return fmt.Errorf("failed to list issues: %w", err)
+		return fmt.Errorf("failed to parse TOC: %w", err)
 	}
 
-	if len(list) == 0 {
-		return fmt.Errorf("no issues found")
-	}
+	// add static bookmarks
+	bookmarks.Bookmarks = append([]meta.Bookmark{
+		{
+			Title:      "TITELSEITE",
+			PageNumber: 1,
+			Level:      1,
+		},
+		{
+			Title:      "HAUSMITTEILUNG",
+			PageNumber: 3,
+			Level:      1,
+		},
+		{
+			Title:      "INHALT",
+			PageNumber: 4,
+			Level:      1,
+		},
+	}, bookmarks.Bookmarks...)
 
-	i := list[len(list)-1]
-	slog.Info("Latest issue found", "title", i.title, "year", i.year, "issue", i.issue)
-
-	err = d.downloadPDF(&i)
-	if err != nil {
-		return err
-	}
-
-	return nil
-
+	info.PublishingDate = bookmarks.PublishingDate
+	return meta.ReplaceBookmarks(w, path, bookmarks.Bookmarks)
 }
