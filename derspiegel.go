@@ -150,14 +150,12 @@ var derSpiegelCmd = &cli.Command{
 				if err != nil {
 					return err
 				}
-				if lastBook.Issue == nil {
-					return errors.New("no issue number detected in last book")
-				}
 
 				count := 0
 				maxIssues := cmd.Int("max-issues")
 				for _, issue := range issues {
-					if issue.Issue == nil || *lastBook.Issue >= *issue.Issue {
+					// Skip if this issue should not be downloaded
+					if !derspiegel.ShouldDownloadIssue(lastBook, issue) {
 						break
 					}
 

@@ -155,7 +155,7 @@ var donaukurierCmd = &cli.Command{
 				count := 0
 				maxIssues := cmd.Int("max-issues")
 				for _, issue := range issues {
-					if issue.PublishingDate.Time().Compare(lastBook.PublishingDate.Time()) <= 0 {
+					if !donaukurier.ShouldDownloadIssue(lastBook, issue) {
 						continue
 					}
 

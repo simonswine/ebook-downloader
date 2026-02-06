@@ -251,3 +251,20 @@ func (d *DerSpiegel) updateBookmarks(info *meta.Info, path string, w io.Writer) 
 	info.PublishingDate = bookmarks.PublishingDate
 	return meta.ReplaceBookmarks(w, path, bookmarks.Bookmarks)
 }
+
+// ShouldDownloadIssue determines if an issue should be downloaded based on the lastBook in the database
+// This implements the nil-safe logic to avoid panics
+func ShouldDownloadIssue(lastBook *meta.Info, issue *meta.Info) bool {
+	// If there's no lastBook or it has no issue number, download everything
+	if lastBook == nil || lastBook.Issue == nil {
+		return true
+	}
+
+	// If the issue has no number, download it (edge case)
+	if issue.Issue == nil {
+		return true
+	}
+
+	// Download if this issue is newer than the last book
+	return *issue.Issue > *lastBook.Issue
+}

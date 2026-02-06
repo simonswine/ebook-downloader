@@ -305,3 +305,15 @@ func (d *Donaukurier) ListIssues(newspaperID int) ([]*meta.Info, error) {
 
 	return issues, err
 }
+
+// ShouldDownloadIssue determines if an issue should be downloaded based on the lastBook in the database
+// This implements the nil-safe logic to avoid panics
+func ShouldDownloadIssue(lastBook *meta.Info, issue *meta.Info) bool {
+	// If there's no lastBook, download everything
+	if lastBook == nil {
+		return true
+	}
+
+	// Download if this issue is newer than the last book
+	return issue.PublishingDate.Time().Compare(lastBook.PublishingDate.Time()) > 0
+}
