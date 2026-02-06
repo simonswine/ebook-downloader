@@ -67,6 +67,11 @@ func (i *Info) Series() string {
 }
 
 func WriteEbookMeta(path string, info *Info) error {
+	if _, err := exec.LookPath("ebook-meta"); err != nil {
+		slog.Warn("skipping meta as cmd not in path", "cmd", "ebook-meta")
+		return nil
+	}
+
 	bufErr := bytes.NewBuffer(nil)
 
 	args := make([]string, 0, 64)

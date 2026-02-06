@@ -14,16 +14,18 @@ import (
 )
 
 var (
-	regexRessort  = regexp.MustCompile(`^[A-Z ]+$`)
-	regexBookmark = regexp.MustCompile(`^\s*\d+\s+\|\s+`)
-	regexIssue    = regexp.MustCompile(`^DER SPIEGEL (\d+)\. Jahrgang \| Heft (\d+) \| (\d+\.\d+.\d+)`)
+	regexRessort        = regexp.MustCompile(`^[A-Z ]+$`)
+	regexBookmark       = regexp.MustCompile(`^\s*\d+\s+\|\s+`)
+	regexBookmarkSimple = regexp.MustCompile(`^\s*(\d+)\s+[A-Z]`) // bookmark without pipe, followed by uppercase letter
+	regexIssue          = regexp.MustCompile(`^DER SPIEGEL (\d+)\. Jahrgang \| Heft (\d+) \| (\d+\.\d+.\d+)`)
+	regexIssueSimple    = regexp.MustCompile(`^DER SPIEGEL (\d+) \| (\d+)$`) // simple format: issue | year
 )
 
 type TOC struct {
-	Issue          int                 `json:"issue"`
-	Year           int                 `json:"year"`
-	PublishingDate meta.PublishingDate `json:"publishing_date"`
-	Bookmarks      []meta.Bookmark     `json:"bookmarks"`
+	Issue          int                  `json:"issue"`
+	Year           int                  `json:"year"`
+	PublishingDate *meta.PublishingDate `json:"publishing_date,omitempty"`
+	Bookmarks      []meta.Bookmark      `json:"bookmarks"`
 }
 
 type titleParts []string
@@ -94,6 +96,7 @@ func parseTOC(r io.Reader) (*TOC, error) {
 		text := scanner.Text()
 
 		if strings.HasPrefix(text, "DER SPIEGEL") {
+			// Try the full format first: "DER SPIEGEL 79. Jahrgang | Heft 28 | 4.7.2025"
 			if m := regexIssue.FindStringSubmatch(text); len(m) == 4 {
 				year, err := strconv.Atoi(m[1])
 				if err != nil {
@@ -118,6 +121,24 @@ func parseTOC(r io.Reader) (*TOC, error) {
 
 				continue
 			}
+			// Try the simple format: "DER SPIEGEL 7 | 2026"
+			if m := regexIssueSimple.FindStringSubmatch(text); len(m) == 3 {
+				issue, err := strconv.Atoi(m[1])
+				if err != nil {
+					slog.Warn("Error parsing issue", "text", m[1], "error", err)
+				} else {
+					result.Issue = issue
+				}
+
+				year, err := strconv.Atoi(m[2])
+				if err != nil {
+					slog.Warn("Error parsing year", "text", m[2], "error", err)
+				} else {
+					result.Year = year
+				}
+
+				continue
+			}
 		}
 
 		if regexRessort.MatchString(text) && text != "DER SPIEGEL" && text != "DER" && text != "SPIEGEL" {
@@ -126,6 +147,7 @@ func parseTOC(r io.Reader) (*TOC, error) {
 			continue
 		}
 
+		// Try bookmark with pipe: "8 | Aufrüstung Bunker bauen,"
 		if regexBookmark.MatchString(text) {
 			finish()
 
@@ -134,7 +156,7 @@ func parseTOC(r io.Reader) (*TOC, error) {
 				continue
 			}
 
-			page, err := strconv.Atoi(text[:idx-1])
+			page, err := strconv.Atoi(strings.TrimSpace(text[:idx]))
 			if err != nil {
 				slog.Warn("Error parsing page number", "text", text, "error", err)
 				continue
@@ -146,6 +168,32 @@ func parseTOC(r io.Reader) (*TOC, error) {
 					Level:      2,
 				},
 				titleParts: []string{text[idx+2:]},
+			}
+			continue
+		}
+
+		// Try bookmark without pipe: "8 Skandale Sexualstraftäter"
+		if m := regexBookmarkSimple.FindStringSubmatch(text); len(m) >= 2 {
+			finish()
+
+			page, err := strconv.Atoi(m[1])
+			if err != nil {
+				slog.Warn("Error parsing page number", "text", text, "error", err)
+				continue
+			}
+
+			// Extract the title after the page number
+			titleStart := len(m[1])
+			for titleStart < len(text) && text[titleStart] == ' ' {
+				titleStart++
+			}
+
+			newBookmark = &parseBookmark{
+				Bookmark: meta.Bookmark{
+					PageNumber: page,
+					Level:      2,
+				},
+				titleParts: []string{text[titleStart:]},
 			}
 			continue
 		}
