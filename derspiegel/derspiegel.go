@@ -1,7 +1,6 @@
 package derspiegel
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"log/slog"
@@ -218,15 +217,10 @@ func (d *DerSpiegel) ListIssues(year int) ([]*meta.Info, error) {
 }
 
 func (d *DerSpiegel) updateBookmarks(info *meta.Info, path string, w io.Writer) error {
-	bufOut := bytes.NewBuffer(nil)
-	if err := meta.ExtractText(path, 4, 5, bufOut); err != nil {
-		return fmt.Errorf("failed to extract text: %w", err)
-	}
 
-	// get bookmarks
-	bookmarks, err := parseTOC(bufOut)
+	bookmarks, err := getTocParser(info).get(path)
 	if err != nil {
-		return fmt.Errorf("failed to parse TOC: %w", err)
+		return err
 	}
 
 	// add static bookmarks
@@ -248,7 +242,9 @@ func (d *DerSpiegel) updateBookmarks(info *meta.Info, path string, w io.Writer) 
 		},
 	}, bookmarks.Bookmarks...)
 
-	info.PublishingDate = bookmarks.PublishingDate
+	if bookmarks.PublishingDate != nil {
+		info.PublishingDate = *bookmarks.PublishingDate
+	}
 	return meta.ReplaceBookmarks(w, path, bookmarks.Bookmarks)
 }
 

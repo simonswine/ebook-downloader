@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
+	"github.com/simonswine/ebook-downloader/meta"
 	"github.com/stretchr/testify/require"
 )
 
@@ -21,13 +23,27 @@ func Test_parseToc(t *testing.T) {
 		if !strings.HasPrefix(file.Name(), "table-of-contents") || !strings.HasSuffix(file.Name(), ".txt") {
 			continue
 		}
-		t.Run(file.Name(), func(t *testing.T) {
+		name := file.Name()
+		t.Run(name, func(t *testing.T) {
 			// read the file
-			f, err := os.Open(filepath.Join("testdata", file.Name()))
+			f, err := os.Open(filepath.Join("testdata", name))
 			require.NoError(t, err)
 
+			issue, err := strconv.ParseInt(name[len(name)-6:len(name)-4], 10, 64)
+			require.NoError(t, err)
+			issueI := int(issue)
+
+			year, err := strconv.ParseInt(name[len(name)-11:len(name)-7], 10, 64)
+			require.NoError(t, err)
+			yearI := int(year)
+
+			info := meta.Info{
+				Issue: &issueI,
+				Year:  &yearI,
+			}
+
 			// Parse the TOC
-			toc, err := parseTOC(f)
+			toc, err := getTocParser(&info).parseTOC(f)
 			require.NoError(t, err)
 
 			actual, err := json.Marshal(toc)

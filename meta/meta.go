@@ -155,6 +155,37 @@ func ReplaceBookmarks(out io.Writer, path string, bookmarks []Bookmark) error {
 	return nil
 }
 
+type Rectangle struct {
+	Page   int // which page is that one
+	X      int // top left x coordinate
+	Y      int // top left y coordinate
+	Width  int // width of the box
+	Height int // height of the box
+}
+
+func ExtractTextRectangles(path string, rects []Rectangle, out io.Writer) error {
+	bufErr := bytes.NewBuffer(nil)
+	for idx, r := range rects {
+		bufErr.Reset()
+		cmd := exec.Command("pdftotext",
+			"-f", strconv.Itoa(r.Page),
+			"-l", strconv.Itoa(r.Page),
+			"-x", strconv.Itoa(r.X),
+			"-y", strconv.Itoa(r.Y),
+			"-W", strconv.Itoa(r.Width),
+			"-H", strconv.Itoa(r.Height),
+			path,
+			"-",
+		)
+		cmd.Stdout = out
+		cmd.Stderr = bufErr
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("error running pdftostring for rectangle[%d]  command: %w, stderr: %s", idx, err, bufErr.String())
+		}
+	}
+	return nil
+}
+
 func ExtractText(path string, from, to int, out io.Writer) error {
 	bufErr := bytes.NewBuffer(nil)
 	cmd := exec.Command("pdftotext", "-f", strconv.Itoa(from), "-l", strconv.Itoa(to), "-raw", path, "-")

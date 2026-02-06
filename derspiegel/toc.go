@@ -2,6 +2,8 @@ package derspiegel
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
 	"io"
 	"log/slog"
 	"regexp"
@@ -66,7 +68,49 @@ type parseBookmark struct {
 	titleParts titleParts
 }
 
-func parseTOC(r io.Reader) (*TOC, error) {
+type tocParser interface {
+	get(string) (*TOC, error)
+	parseTOC(io.Reader) (*TOC, error)
+}
+
+func getTocParser(info *meta.Info) tocParser {
+	def := &toc202539{}
+	if info == nil {
+		return def
+	}
+
+	if info.Year == nil || *info.Year > 2025 {
+		return def
+	}
+
+	if *info.Year == 2025 && (info.Issue == nil || *info.Issue > 39) {
+		return def
+	}
+
+	return &tocLegacy{}
+}
+
+// parse toc before 2025-39
+type tocLegacy struct {
+}
+
+func (t *tocLegacy) get(path string) (*TOC, error) {
+	buf := bytes.NewBuffer(nil)
+
+	if err := meta.ExtractText(path, 4, 5, buf); err != nil {
+		return nil, fmt.Errorf("failed to extract text: %w", err)
+	}
+
+	// get bookmarks
+	bookmarks, err := t.parseTOC(buf)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse TOC: %w", err)
+	}
+
+	return bookmarks, nil
+}
+
+func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 	var result TOC
 	// go through result line by line
 	scanner := bufio.NewScanner(r)
@@ -116,7 +160,8 @@ func parseTOC(r io.Reader) (*TOC, error) {
 				if err != nil {
 					slog.Warn("Error parsing publishing date", "text", m[3], "error", err)
 				} else {
-					result.PublishingDate = meta.PublishingDate(publishingDate)
+					d := meta.PublishingDate(publishingDate)
+					result.PublishingDate = &d
 				}
 
 				continue
@@ -216,4 +261,36 @@ func parseTOC(r io.Reader) (*TOC, error) {
 	finish()
 
 	return &result, nil
+}
+
+type toc202539 struct {
+}
+
+// rects with toc starting issue 2025-39 new layout of toc
+var rects202539 = []meta.Rectangle{
+	{Page: 4, X: 30, Y: 120, Width: 130, Height: 400},
+	{Page: 4, X: 450, Y: 120, Width: 130, Height: 400},
+	{Page: 5, X: 25, Y: 70, Width: 130, Height: 700},
+	{Page: 5, X: 440, Y: 70, Width: 130, Height: 700},
+}
+
+func (t *toc202539) get(path string) (*TOC, error) {
+	buf := bytes.NewBuffer(nil)
+
+	if err := meta.ExtractTextRectangles(path, rects202539, buf); err != nil {
+		return nil, fmt.Errorf("failed to extract text: %w", err)
+	}
+
+	// get bookmarks
+	bookmarks, err := t.parseTOC(buf)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse TOC: %w", err)
+	}
+
+	return bookmarks, nil
+}
+
+func (_ *toc202539) parseTOC(buf io.Reader) (*TOC, error) {
+	// TODO
+	return nil, nil
 }
