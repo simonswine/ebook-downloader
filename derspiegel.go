@@ -18,7 +18,7 @@ func newDerSpiegel(cmd *cli.Command) *derspiegel.DerSpiegel {
 }
 
 func downloadDerSpiegel(d *derspiegel.DerSpiegel, issue *meta.Info, db *calibredb.CalibreDB) error {
-	f, err := os.Create(fmt.Sprintf("der-spiegel-%04d-%04d.pdf", *issue.Year, *issue.Issue))
+	f, err := os.Create(fmt.Sprintf("der-spiegel-%04d-%02d.pdf", *issue.Year, *issue.Issue))
 	if err != nil {
 		return err
 	}
