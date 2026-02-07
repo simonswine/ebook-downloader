@@ -2,7 +2,6 @@ package derspiegel
 
 import (
 	"bufio"
-	"bytes"
 	"fmt"
 	"io"
 	"log/slog"
@@ -44,7 +43,7 @@ func (c titleParts) String() string {
 	for i, s := range c {
 
 		// trim spaces
-		s = strings.TrimSpace(s)
+		s = trimSpace(s)
 
 		// handle hyphenation
 		if i > 0 && len(result) > 0 {
@@ -68,8 +67,25 @@ type parseBookmark struct {
 	titleParts titleParts
 }
 
+// trimSpace removes regular whitespace and zero-width space characters
+func trimSpace(s string) string {
+	return strings.TrimFunc(s, func(r rune) bool {
+		if unicode.IsSpace(r) {
+			return true
+		}
+		if r == '\u200b' {
+			return true
+		}
+		/*|| r == '\u00ad' {
+			return true
+		}
+		*/
+		return false
+	})
+}
+
 type tocParser interface {
-	get(string) (*TOC, error)
+	extractText(string, io.Writer) error
 	parseTOC(io.Reader) (*TOC, error)
 }
 
@@ -94,20 +110,11 @@ func getTocParser(info *meta.Info) tocParser {
 type tocLegacy struct {
 }
 
-func (t *tocLegacy) get(path string) (*TOC, error) {
-	buf := bytes.NewBuffer(nil)
-
+func (t *tocLegacy) extractText(path string, buf io.Writer) error {
 	if err := meta.ExtractText(path, 4, 5, buf); err != nil {
-		return nil, fmt.Errorf("failed to extract text: %w", err)
+		return fmt.Errorf("failed to extract text: %w", err)
 	}
-
-	// get bookmarks
-	bookmarks, err := t.parseTOC(buf)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse TOC: %w", err)
-	}
-
-	return bookmarks, nil
+	return nil
 }
 
 func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
@@ -130,7 +137,7 @@ func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 					Title:      lastRessort,
 				})
 			}
-			newBookmark.Title = strings.TrimSpace(newBookmark.titleParts.String())
+			newBookmark.Title = trimSpace(newBookmark.titleParts.String())
 			result.Bookmarks = append(result.Bookmarks, newBookmark.Bookmark)
 			lastRessort = ""
 			newBookmark = nil
@@ -222,7 +229,7 @@ type toc202539 struct {
 
 // rects with toc starting issue 2025-39 new layout of toc
 var rects202539 = []meta.Rectangle{
-	{Page: 1, X: 495, Y: 50, Width: 80, Height: 20},
+	{Page: 1, X: 490, Y: 50, Width: 90, Height: 20},
 	{Page: 4, X: 30, Y: 120, Width: 130, Height: 400, Prefix: "\n"},
 	{Page: 4, X: 450, Y: 120, Width: 130, Height: 400, Prefix: "\n"},
 	{Page: 5, X: 25, Y: 70, Width: 130, Height: 700, Prefix: "\n"},
@@ -230,20 +237,11 @@ var rects202539 = []meta.Rectangle{
 	{Page: 5, X: 440, Y: 670, Width: 130, Height: 100, Prefix: "\nMETA\n"},
 }
 
-func (t *toc202539) get(path string) (*TOC, error) {
-	buf := bytes.NewBuffer(nil)
-
+func (t *toc202539) extractText(path string, buf io.Writer) error {
 	if err := meta.ExtractTextRectangles(path, rects202539, buf); err != nil {
-		return nil, fmt.Errorf("failed to extract text: %w", err)
+		return fmt.Errorf("failed to extract text: %w", err)
 	}
-
-	// get bookmarks
-	bookmarks, err := t.parseTOC(buf)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse TOC: %w", err)
-	}
-
-	return bookmarks, nil
+	return nil
 }
 
 func (_ *toc202539) parseTOC(r io.Reader) (*TOC, error) {
@@ -265,7 +263,7 @@ func (_ *toc202539) parseTOC(r io.Reader) (*TOC, error) {
 					Title:      lastRessort,
 				})
 			}
-			newBookmark.Title = strings.TrimSpace(newBookmark.titleParts.String())
+			newBookmark.Title = trimSpace(newBookmark.titleParts.String())
 			result.Bookmarks = append(result.Bookmarks, newBookmark.Bookmark)
 			lastRessort = ""
 			newBookmark = nil

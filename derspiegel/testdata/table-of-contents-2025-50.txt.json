@@ -1,0 +1,297 @@
+{
+  "issue": 50,
+  "year": 2025,
+  "publishing_date": "2025-12-05T00:00:00Z",
+  "bookmarks": [
+    {
+      "page": 8,
+      "level": 1,
+      "title": "TITEL"
+    },
+    {
+      "page": 8,
+      "level": 2,
+      "title": "Gesundheit Warum Millionen junge Menschen in Deutschland psychisch belastet sind"
+    },
+    {
+      "page": 17,
+      "level": 2,
+      "title": "Psychologie Die Präsidentin des Kinderschutzbunds Sabine Andresen über die seelische Gesundheit von Kindern und Jugendlichen"
+    },
+    {
+      "page": 18,
+      "level": 2,
+      "title": "Protokoll Die Angst eines Vaters um seine magersüchtige Tochter"
+    },
+    {
+      "page": 20,
+      "level": 1,
+      "title": "POLITISCHE BÜHNE"
+    },
+    {
+      "page": 20,
+      "level": 2,
+      "title": "Sinti und Roma wehren sich | Bewegung für mögliches AfD-Verbot"
+    },
+    {
+      "page": 6,
+      "level": 1,
+      "title": "DEUTSCHLAND"
+    },
+    {
+      "page": 6,
+      "level": 2,
+      "title": "Leitartikel Europa fällt bei den Ukraineverhandlungen durch Uneinigkeit auf"
+    },
+    {
+      "page": 26,
+      "level": 2,
+      "title": "Parlament Eine Neuauszählung der Bundestagswahl könnte die Koalition die Mehrheit kosten"
+    },
+    {
+      "page": 29,
+      "level": 2,
+      "title": "Haushalt Warum der Bundestag eine rechte Denkfabrik fördert"
+    },
+    {
+      "page": 30,
+      "level": 2,
+      "title": "EU Die Malteserin Roberta Metsola möchte hoch hinaus"
+    },
+    {
+      "page": 32,
+      "level": 2,
+      "title": "Regierung Die Verstrickungen zwischen Wirtschaftsministerin Reiche und ihrem Lebensgefährten Guttenberg"
+    },
+    {
+      "page": 34,
+      "level": 2,
+      "title": "Parteien Viele Menschen mit Einwanderungsgeschichte wählen die AfD"
+    },
+    {
+      "page": 39,
+      "level": 2,
+      "title": "Bildung Grenzkontrollen in Frankfurt (Oder) treffen Studierende"
+    },
+    {
+      "page": 40,
+      "level": 1,
+      "title": "DEBATTE"
+    },
+    {
+      "page": 40,
+      "level": 2,
+      "title": "Bürgerkrieg Das Leid der Menschen im Sudan"
+    },
+    {
+      "page": 42,
+      "level": 1,
+      "title": "AUSLAND"
+    },
+    {
+      "page": 42,
+      "level": 2,
+      "title": "Russland Putin braucht derzeit keinen Friedensdeal"
+    },
+    {
+      "page": 46,
+      "level": 2,
+      "title": "Syrien Eine Nahbetrachtung des Übergangspräsidenten Ahmed al-Sharaa"
+    },
+    {
+      "page": 50,
+      "level": 2,
+      "title": "Globalisierung Autor Harald Schumann fordert im SPIEGEL-Gespräch eine gerechtere Verteilung des Reichtums"
+    },
+    {
+      "page": 53,
+      "level": 2,
+      "title": "Niederlande Das Ende vom »Zwarte Piet«"
+    },
+    {
+      "page": 54,
+      "level": 2,
+      "title": "US-Präsident Trump begnadigt Honduras’ Ex-Präsidenten | Finnlands frühere Regierungschefin Sanna Marin über das Frausein in der Politik"
+    },
+    {
+      "page": 56,
+      "level": 1,
+      "title": "REPORTER"
+    },
+    {
+      "page": 56,
+      "level": 2,
+      "title": "Justiz Unterwegs mit einem Anwalt im ländlichen Louisiana, der versucht, Migranten aus Trumps Abschiebezentren zu befreien"
+    },
+    {
+      "page": 64,
+      "level": 2,
+      "title": "Kolumne Alles Gutsch"
+    },
+    {
+      "page": 66,
+      "level": 1,
+      "title": "WIRTSCHAFT"
+    },
+    {
+      "page": 66,
+      "level": 2,
+      "title": "Finanzbetrug Kriminelle Netzwerke bringen Verbraucher um Millionen und lassen Zwangsarbeiter für sich schuften"
+    },
+    {
+      "page": 70,
+      "level": 2,
+      "title": "Verkehr Die Bahn wird so schnell nicht wieder pünktlich"
+    },
+    {
+      "page": 72,
+      "level": 2,
+      "title": "Arbeitsrecht Ein Jurist erklärt, warum Richter beim Homeoffice so streng sind"
+    },
+    {
+      "page": 74,
+      "level": 2,
+      "title": "Konzerne Krise in der deutschen Chemiebranche"
+    },
+    {
+      "page": 77,
+      "level": 2,
+      "title": "Fahrzeugindustrie Der Ausstieg aus dem Verbrenner-Aus birgt Risiken"
+    },
+    {
+      "page": 78,
+      "level": 2,
+      "title": "Warum der Arbeitsmarkt für Bewerber schwieriger wird | Abschied von den Gasnetzen"
+    },
+    {
+      "page": 82,
+      "level": 1,
+      "title": "WISSEN"
+    },
+    {
+      "page": 82,
+      "level": 2,
+      "title": "Ernährung Forscher Thomas Henle wirbt im SPIEGEL-Gespräch für Gelassenheit im Umgang mit hoch verarbeiteten Lebensmitteln"
+    },
+    {
+      "page": 86,
+      "level": 2,
+      "title": "Medizin Suche nach einer Impfung gegen Akne"
+    },
+    {
+      "page": 88,
+      "level": 2,
+      "title": "Umweltschutz Gewaltiges Gasleck in Süddeutschland"
+    },
+    {
+      "page": 90,
+      "level": 2,
+      "title": "Es blitzt auf dem Mars | Verkleben Kaugummis den Magen?"
+    },
+    {
+      "page": 92,
+      "level": 1,
+      "title": "KULTUR"
+    },
+    {
+      "page": 92,
+      "level": 2,
+      "title": "Nationalsozialismus Neue Funde zeigen, wie treu Familienmitglieder des Malers Gerhard Richter dem NS-Regime waren"
+    },
+    {
+      "page": 97,
+      "level": 2,
+      "title": "Showbusiness Der schwer kranke Thomas Gottschalk verabschiedet sich vom Fernsehen"
+    },
+    {
+      "page": 98,
+      "level": 2,
+      "title": "Literatur Die kanadische Autorin Margaret Atwood im SPIEGEL-Gespräch über Angst, Freiheit und Erfolg"
+    },
+    {
+      "page": 101,
+      "level": 2,
+      "title": "Technokultur Der Tod der Klubs wurde schon beweint, nun öffnen neue Discos"
+    },
+    {
+      "page": 102,
+      "level": 2,
+      "title": "Mode Pelz erlebt ein Comeback"
+    },
+    {
+      "page": 104,
+      "level": 2,
+      "title": "Kino Das archetypische Ekel Stromberg ist wieder da, beugt es sich dem Zeitgeist?"
+    },
+    {
+      "page": 105,
+      "level": 2,
+      "title": "Film »Jay Kelly« | Fleetwood Mac | Comics von Perscheid"
+    },
+    {
+      "page": 108,
+      "level": 1,
+      "title": "SPORT"
+    },
+    {
+      "page": 108,
+      "level": 2,
+      "title": "Karrieren Der ehemalige Bayern-Stürmer Giovane Elber ist heute Rinderfarmer in Brasilien"
+    },
+    {
+      "page": 113,
+      "level": 2,
+      "title": "Randsportart Schachboxen | Haltungsnote: Die Würde des Schiedsrichters"
+    },
+    {
+      "page": 69,
+      "level": 1,
+      "title": "META"
+    },
+    {
+      "page": 69,
+      "level": 2,
+      "title": "SPIEGEL-TV-Programm"
+    },
+    {
+      "page": 103,
+      "level": 2,
+      "title": "Bestseller"
+    },
+    {
+      "page": 114,
+      "level": 2,
+      "title": "Impressum, Leserservice"
+    },
+    {
+      "page": 115,
+      "level": 2,
+      "title": "Nachrufe"
+    },
+    {
+      "page": 116,
+      "level": 2,
+      "title": "Personalien"
+    },
+    {
+      "page": 118,
+      "level": 2,
+      "title": "Posteingang"
+    },
+    {
+      "page": 120,
+      "level": 2,
+      "title": "Hohlspiegel"
+    },
+    {
+      "page": 121,
+      "level": 2,
+      "title": "Familienalbum"
+    },
+    {
+      "page": 122,
+      "level": 2,
+      "title": "Niemals geht man so ganz"
+    }
+  ]
+}

@@ -12,6 +12,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func updateTXT(t testing.TB, name string, p tocParser) {
+	txtPath := filepath.Join("testdata", name)
+	pdfPath := txtPath[0:len(txtPath)-4] + ".pdf"
+	_, err := os.Stat(pdfPath)
+	if os.IsNotExist(err) {
+		t.Logf("Skip updating %s as %s doesn't exist", name, pdfPath)
+		return
+	}
+	require.NoError(t, err)
+
+	f, err := os.Create(txtPath)
+	require.NoError(t, err)
+	defer f.Close()
+
+	require.NoError(t, p.extractText(pdfPath, f))
+}
+
 func Test_parseToc(t *testing.T) {
 	// Read the test files from the "testdata" folder
 	files, err := os.ReadDir("testdata")
@@ -43,13 +60,20 @@ func Test_parseToc(t *testing.T) {
 			}
 
 			// Parse the TOC
-			toc, err := getTocParser(&info).parseTOC(f)
+			p := getTocParser(&info)
+
+			// Update text version when pdf is available
+			if os.Getenv("UPDATE_TXT") == "true" {
+				updateTXT(t, name, p)
+			}
+
+			toc, err := p.parseTOC(f)
 			require.NoError(t, err)
 
 			actual, err := json.Marshal(toc)
 			require.NoError(t, err)
 
-			if os.Getenv("UPDATE") == "true" {
+			if os.Getenv("UPDATE_JSON") == "true" {
 				formatted, err := json.MarshalIndent(toc, "", "  ")
 				require.NoError(t, err)
 				err = os.WriteFile(filepath.Join("testdata", file.Name()+".json"), formatted, 0644)

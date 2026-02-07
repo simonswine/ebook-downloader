@@ -1,6 +1,7 @@
 package derspiegel
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log/slog"
@@ -217,8 +218,14 @@ func (d *DerSpiegel) ListIssues(year int) ([]*meta.Info, error) {
 }
 
 func (d *DerSpiegel) updateBookmarks(info *meta.Info, path string, w io.Writer) error {
+	p := getTocParser(info)
 
-	bookmarks, err := getTocParser(info).get(path)
+	buf := bytes.NewBuffer(nil)
+	if err := p.extractText(path, buf); err != nil {
+		return err
+	}
+
+	bookmarks, err := p.parseTOC(buf)
 	if err != nil {
 		return err
 	}
