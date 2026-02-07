@@ -93,11 +93,16 @@ var derSpiegelCmd = &cli.Command{
 					Value: false,
 					Usage: "add downloaded issues to calibredb",
 				},
+				&cli.IntFlag{
+					Name:  "year",
+					Value: 0,
+					Usage: "year to download",
+				},
 			},
 			Action: func(ctx context.Context, cmd *cli.Command) error {
 				d := newDerSpiegel(cmd)
 
-				issues, err := d.ListIssues(0)
+				issues, err := d.ListIssues(cmd.Int("year"))
 				if err != nil {
 					return err
 				}
@@ -133,10 +138,15 @@ var derSpiegelCmd = &cli.Command{
 					Value: 31,
 					Usage: "maximum number of issues to download, 0 for all",
 				},
+				&cli.IntFlag{
+					Name:  "year",
+					Value: 0,
+					Usage: "year to download",
+				},
 			},
 			Action: func(ctx context.Context, cmd *cli.Command) error {
 				d := newDerSpiegel(cmd)
-				issues, err := d.ListIssues(0)
+				issues, err := d.ListIssues(cmd.Int("year"))
 				if err != nil {
 					return err
 				}
