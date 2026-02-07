@@ -156,16 +156,20 @@ func ReplaceBookmarks(out io.Writer, path string, bookmarks []Bookmark) error {
 }
 
 type Rectangle struct {
-	Page   int // which page is that one
-	X      int // top left x coordinate
-	Y      int // top left y coordinate
-	Width  int // width of the box
-	Height int // height of the box
+	Page   int    // which page is that one
+	X      int    // top left x coordinate
+	Y      int    // top left y coordinate
+	Width  int    // width of the box
+	Height int    // height of the box
+	Prefix string // optional prefix to append to before the section
 }
 
 func ExtractTextRectangles(path string, rects []Rectangle, out io.Writer) error {
 	bufErr := bytes.NewBuffer(nil)
 	for idx, r := range rects {
+		if r.Prefix != "" {
+			fmt.Fprintln(out, r.Prefix)
+		}
 		bufErr.Reset()
 		cmd := exec.Command("pdftotext",
 			"-f", strconv.Itoa(r.Page),
@@ -174,6 +178,7 @@ func ExtractTextRectangles(path string, rects []Rectangle, out io.Writer) error 
 			"-y", strconv.Itoa(r.Y),
 			"-W", strconv.Itoa(r.Width),
 			"-H", strconv.Itoa(r.Height),
+			"-raw",
 			path,
 			"-",
 		)

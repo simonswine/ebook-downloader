@@ -16,11 +16,11 @@ import (
 )
 
 var (
-	regexRessort        = regexp.MustCompile(`^[A-Z ]+$`)
+	regexRessort        = regexp.MustCompile(`^[A-ZÄÖÜ ]+$`)
 	regexBookmark       = regexp.MustCompile(`^\s*\d+\s+\|\s+`)
-	regexBookmarkSimple = regexp.MustCompile(`^\s*(\d+)\s+[A-Z]`) // bookmark without pipe, followed by uppercase letter
+	regexBookmarkNoPipe = regexp.MustCompile(`^\s*(\d+)\s+(.+)$`)
 	regexIssue          = regexp.MustCompile(`^DER SPIEGEL (\d+)\. Jahrgang \| Heft (\d+) \| (\d+\.\d+.\d+)`)
-	regexIssueSimple    = regexp.MustCompile(`^DER SPIEGEL (\d+) \| (\d+)$`) // simple format: issue | year
+	regexIssueShort     = regexp.MustCompile(`^Nr\.\s+(\d+)\s+\|\s+(\d+\.\d+\.\d+)`)
 )
 
 type TOC struct {
@@ -130,17 +130,16 @@ func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 					Title:      lastRessort,
 				})
 			}
-			newBookmark.Title = newBookmark.titleParts.String()
+			newBookmark.Title = strings.TrimSpace(newBookmark.titleParts.String())
 			result.Bookmarks = append(result.Bookmarks, newBookmark.Bookmark)
 			lastRessort = ""
 			newBookmark = nil
 		}
 	)
 	for scanner.Scan() {
-		text := scanner.Text()
+		text := strings.TrimSpace(scanner.Text())
 
 		if strings.HasPrefix(text, "DER SPIEGEL") {
-			// Try the full format first: "DER SPIEGEL 79. Jahrgang | Heft 28 | 4.7.2025"
 			if m := regexIssue.FindStringSubmatch(text); len(m) == 4 {
 				year, err := strconv.Atoi(m[1])
 				if err != nil {
@@ -166,24 +165,6 @@ func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 
 				continue
 			}
-			// Try the simple format: "DER SPIEGEL 7 | 2026"
-			if m := regexIssueSimple.FindStringSubmatch(text); len(m) == 3 {
-				issue, err := strconv.Atoi(m[1])
-				if err != nil {
-					slog.Warn("Error parsing issue", "text", m[1], "error", err)
-				} else {
-					result.Issue = issue
-				}
-
-				year, err := strconv.Atoi(m[2])
-				if err != nil {
-					slog.Warn("Error parsing year", "text", m[2], "error", err)
-				} else {
-					result.Year = year
-				}
-
-				continue
-			}
 		}
 
 		if regexRessort.MatchString(text) && text != "DER SPIEGEL" && text != "DER" && text != "SPIEGEL" {
@@ -192,7 +173,6 @@ func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 			continue
 		}
 
-		// Try bookmark with pipe: "8 | Aufrüstung Bunker bauen,"
 		if regexBookmark.MatchString(text) {
 			finish()
 
@@ -201,7 +181,7 @@ func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 				continue
 			}
 
-			page, err := strconv.Atoi(strings.TrimSpace(text[:idx]))
+			page, err := strconv.Atoi(text[:idx-1])
 			if err != nil {
 				slog.Warn("Error parsing page number", "text", text, "error", err)
 				continue
@@ -213,32 +193,6 @@ func (t *tocLegacy) parseTOC(r io.Reader) (*TOC, error) {
 					Level:      2,
 				},
 				titleParts: []string{text[idx+2:]},
-			}
-			continue
-		}
-
-		// Try bookmark without pipe: "8 Skandale Sexualstraftäter"
-		if m := regexBookmarkSimple.FindStringSubmatch(text); len(m) >= 2 {
-			finish()
-
-			page, err := strconv.Atoi(m[1])
-			if err != nil {
-				slog.Warn("Error parsing page number", "text", text, "error", err)
-				continue
-			}
-
-			// Extract the title after the page number
-			titleStart := len(m[1])
-			for titleStart < len(text) && text[titleStart] == ' ' {
-				titleStart++
-			}
-
-			newBookmark = &parseBookmark{
-				Bookmark: meta.Bookmark{
-					PageNumber: page,
-					Level:      2,
-				},
-				titleParts: []string{text[titleStart:]},
 			}
 			continue
 		}
@@ -268,10 +222,12 @@ type toc202539 struct {
 
 // rects with toc starting issue 2025-39 new layout of toc
 var rects202539 = []meta.Rectangle{
-	{Page: 4, X: 30, Y: 120, Width: 130, Height: 400},
-	{Page: 4, X: 450, Y: 120, Width: 130, Height: 400},
-	{Page: 5, X: 25, Y: 70, Width: 130, Height: 700},
-	{Page: 5, X: 440, Y: 70, Width: 130, Height: 700},
+	{Page: 1, X: 495, Y: 50, Width: 80, Height: 20},
+	{Page: 4, X: 30, Y: 120, Width: 130, Height: 400, Prefix: "\n"},
+	{Page: 4, X: 450, Y: 120, Width: 130, Height: 400, Prefix: "\n"},
+	{Page: 5, X: 25, Y: 70, Width: 130, Height: 700, Prefix: "\n"},
+	{Page: 5, X: 440, Y: 70, Width: 130, Height: 600, Prefix: "\n"},
+	{Page: 5, X: 440, Y: 670, Width: 130, Height: 100, Prefix: "\nMETA\n"},
 }
 
 func (t *toc202539) get(path string) (*TOC, error) {
@@ -290,7 +246,89 @@ func (t *toc202539) get(path string) (*TOC, error) {
 	return bookmarks, nil
 }
 
-func (_ *toc202539) parseTOC(buf io.Reader) (*TOC, error) {
-	// TODO
-	return nil, nil
+func (_ *toc202539) parseTOC(r io.Reader) (*TOC, error) {
+	var result TOC
+	scanner := bufio.NewScanner(r)
+	var (
+		newBookmark *parseBookmark
+		lastRessort string
+		finish      = func() {
+			if newBookmark == nil {
+				return
+			}
+
+			// If we have a ressort, we need to add it to the list.
+			if lastRessort != "" {
+				result.Bookmarks = append(result.Bookmarks, meta.Bookmark{
+					PageNumber: newBookmark.PageNumber,
+					Level:      1,
+					Title:      lastRessort,
+				})
+			}
+			newBookmark.Title = strings.TrimSpace(newBookmark.titleParts.String())
+			result.Bookmarks = append(result.Bookmarks, newBookmark.Bookmark)
+			lastRessort = ""
+			newBookmark = nil
+		}
+	)
+
+	for scanner.Scan() {
+		text := strings.TrimSpace(scanner.Text())
+
+		// Parse issue number and date from "Nr. 7 | 6.2.2026" format
+		if m := regexIssueShort.FindStringSubmatch(text); len(m) == 3 {
+			issue, err := strconv.Atoi(m[1])
+			if err != nil {
+				slog.Warn("Error parsing issue", "text", m[1], "error", err)
+			} else {
+				result.Issue = issue
+			}
+
+			publishingDate, err := time.Parse("2.1.2006", m[2])
+			if err != nil {
+				slog.Warn("Error parsing publishing date", "text", m[2], "error", err)
+			} else {
+				d := meta.PublishingDate(publishingDate)
+				result.PublishingDate = &d
+				result.Year = publishingDate.Year()
+			}
+			continue
+		}
+
+		if regexRessort.MatchString(text) && text != "DER SPIEGEL" && text != "DER" && text != "SPIEGEL" {
+			finish()
+			lastRessort = text
+			continue
+		}
+
+		if m := regexBookmarkNoPipe.FindStringSubmatch(text); len(m) == 3 {
+			finish()
+
+			page, err := strconv.Atoi(m[1])
+			if err != nil {
+				slog.Warn("Error parsing page number", "text", text, "error", err)
+				continue
+			}
+
+			newBookmark = &parseBookmark{
+				Bookmark: meta.Bookmark{
+					PageNumber: page,
+					Level:      2,
+				},
+				titleParts: []string{m[2]},
+			}
+			continue
+		}
+
+		// finally handle it as additional text lines
+		if newBookmark != nil && text != "" {
+			newBookmark.titleParts = append(newBookmark.titleParts, text)
+		}
+	}
+	if scanner.Err() != nil {
+		return nil, scanner.Err()
+	}
+	finish()
+
+	return &result, nil
 }
