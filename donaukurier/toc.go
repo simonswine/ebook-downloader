@@ -4,21 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"strconv"
 	"strings"
 	"unicode/utf8"
 
 	"github.com/simonswine/ebook-downloader/meta"
 )
-
-type pageContent struct {
-	PageWebReader int `json:"pageWebreader"`
-	Content       struct {
-		Ressort string `json:"ressort"`
-		Title   string `json:"title"`
-		Date    string `json:"date"`
-	}
-}
 
 const (
 	htmlTagStart = 60 // Unicode `<`
@@ -67,49 +57,51 @@ func stripHtmlTags(s string) string {
 	return s
 }
 
-func parseToc(r io.Reader) ([]meta.Bookmark, error) {
-	body := make(map[string][]pageContent)
+// publicationContentItems represents the GetPublicationContentItems JSON response.
+type publicationContentItems struct {
+	PublicationID int `json:"PublicationID"`
+	Content       []struct {
+		Category   string `json:"Category"`
+		PageNumber int    `json:"PageNumber"`
+		ContentItem []struct {
+			Title string `json:"Title"`
+		} `json:"ContentItem"`
+	} `json:"Content"`
+}
+
+// parseTocV2 parses bookmarks from the twipecloud GetPublicationContentItems JSON format.
+func parseTocV2(r io.Reader) ([]meta.Bookmark, error) {
+	var body publicationContentItems
 	if err := json.NewDecoder(r).Decode(&body); err != nil {
 		return nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
 
-	// order pages correctly
-	keys := make([][]pageContent, len(body))
-	for k, v := range body {
-		page, err := strconv.Atoi(k)
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert key to int: %w", err)
-		}
-
-		keys[page-1] = v
-	}
-
 	var (
-		lastRessort string
-		result      []meta.Bookmark
+		lastCategory string
+		result       []meta.Bookmark
 	)
-	for idx, v := range keys {
-		if idx == 0 {
+	for _, c := range body.Content {
+		if c.PageNumber == 0 {
 			continue
 		}
 
-		for _, v := range v {
-			if v.Content.Title == "" {
+		if c.Category != lastCategory && c.Category != "" {
+			result = append(result, meta.Bookmark{
+				PageNumber: c.PageNumber,
+				Title:      c.Category,
+				Level:      1,
+			})
+			lastCategory = c.Category
+		}
+
+		for _, item := range c.ContentItem {
+			title := strings.TrimSpace(stripHtmlTags(item.Title))
+			if title == "" {
 				continue
 			}
-
-			if v.Content.Ressort != lastRessort && v.Content.Ressort != "" {
-				result = append(result, meta.Bookmark{
-					PageNumber: idx + 1,
-					Title:      stripHtmlTags(v.Content.Ressort),
-					Level:      1,
-				})
-				lastRessort = v.Content.Ressort
-			}
-
 			result = append(result, meta.Bookmark{
-				PageNumber: idx + 1,
-				Title:      stripHtmlTags(v.Content.Title),
+				PageNumber: c.PageNumber,
+				Title:      title,
 				Level:      2,
 			})
 		}
@@ -117,3 +109,5 @@ func parseToc(r io.Reader) ([]meta.Bookmark, error) {
 
 	return result, nil
 }
+
+

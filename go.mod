@@ -1,9 +1,10 @@
 module github.com/simonswine/ebook-downloader
 
-go 1.24.3
+go 1.24
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.3
+	github.com/google/uuid v1.6.0
 	github.com/headzoo/surf v1.0.1
 	github.com/stretchr/testify v1.10.0
 	github.com/urfave/cli/v3 v3.3.8

@@ -111,11 +111,9 @@ var donaukurierCmd = &cli.Command{
 				count := 0
 				maxIssues := cmd.Int("max-issues")
 				for _, issue := range issues {
-
 					if err := downloadDonaukurier(d, issue, db); err != nil {
 						return err
 					}
-
 					count++
 					if count >= maxIssues && maxIssues != 0 {
 						break
@@ -127,7 +125,7 @@ var donaukurierCmd = &cli.Command{
 		},
 		{
 			Name:  "sync",
-			Usage: "download issues from donaukurier, which are not in calibredb",
+			Usage: "download issues from donaukurier which are not yet in calibredb",
 			Flags: []cli.Flag{
 				&cli.IntFlag{
 					Name:  "max-issues",
