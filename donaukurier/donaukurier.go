@@ -1,6 +1,7 @@
 package donaukurier
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -9,6 +10,8 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -458,8 +461,49 @@ func (d *Donaukurier) Download(info *meta.Info, fPDF *os.File) error {
 		return fmt.Errorf("close PDF: %w", err)
 	}
 
+	if err := d.detectIssue(info, fPDF.Name()); err != nil {
+		return fmt.Errorf("failed to detect issue: %w", err)
+	}
+
+	if err := meta.WriteEbookMeta(fPDF.Name(), info); err != nil {
+		return fmt.Errorf("failed to write ebook meta: %w", err)
+	}
+
 	slog.Info("Downloaded PDF", "date", info.PublishingDate, "path", fPDF.Name())
 	return nil
+}
+
+// detectIssue extracts the issue number from the front page of the PDF and
+// stores it in info.Issue. It looks for a line starting with "Nr." followed
+// by the issue number and a comma (e.g. "Nr. 123, ...").
+func (d *Donaukurier) detectIssue(info *meta.Info, path string) error {
+	frontText := bytes.NewBuffer(nil)
+	if err := meta.ExtractText(path, 1, 1, frontText); err != nil {
+		return fmt.Errorf("failed to extract text: %w", err)
+	}
+
+	scanner := bufio.NewScanner(frontText)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "Nr.") {
+			continue
+		}
+		idx := strings.Index(line, ",")
+		if idx == -1 {
+			continue
+		}
+		issue, err := strconv.Atoi(strings.TrimSpace(line[3:idx]))
+		if err != nil {
+			return fmt.Errorf("failed to parse issue number: %w", err)
+		}
+		info.Issue = &issue
+		slog.Debug("Found issue number", "issue", issue)
+		return nil
+	}
+	if err := scanner.Err(); err != nil {
+		return fmt.Errorf("failed to scan front text: %w", err)
+	}
+	return fmt.Errorf("issue number not found on front page")
 }
 
 // fetchBookmarks retrieves and parses article metadata from the epaper CDN
